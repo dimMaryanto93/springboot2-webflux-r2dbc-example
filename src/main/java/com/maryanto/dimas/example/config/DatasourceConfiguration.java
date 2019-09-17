@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.flyway.FlywayDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.r2dbc.connectionfactory.R2dbcTransactionManager;
+import org.springframework.transaction.ReactiveTransactionManager;
 
 import java.sql.SQLException;
 
@@ -32,6 +34,11 @@ public class DatasourceConfiguration {
                         .password(password)
                         .build()
         );
+    }
+
+    @Bean
+    public ReactiveTransactionManager transactionalOperator(ConnectionFactory cf) {
+        return new R2dbcTransactionManager(cf);
     }
 
 }
