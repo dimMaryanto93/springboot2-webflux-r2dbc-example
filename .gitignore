@@ -32,3 +32,4 @@ build/
 
 ### Filesystems ###
 .DS_Store
+*.log*

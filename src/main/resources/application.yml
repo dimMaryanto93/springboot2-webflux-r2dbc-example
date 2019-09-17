@@ -1,0 +1,47 @@
+server:
+  port: ${APPLICATION_PORT:8080}
+  servlet:
+    context-path: /@project.artifactId@
+# spring configuration
+spring:
+  application:
+    name: @project.artifactId@
+    version: @project.version@
+    fullname: @project.name@
+  mvc:
+    dispatch-options-request: true
+  datasource:
+    url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${DATABASE_NAME:postgres}
+    username: ${DATABASE_USER:postgres}
+    password: ${DATABASE_PASSWORD:passwordnyaPostgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        enable_lazy_load_no_trans: true
+        id:
+          new_generator_mappings: false
+        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+        globally_quoted_identifiers: true
+        temp:
+          use_jdbc_metadata_defaults: false
+    database: postgresql
+  flyway:
+    encoding: UTF-8
+    enabled: false
+    baseline-on-migrate: true
+    clean-disabled: false
+    clean-on-validation-error: true
+    connect-retries: 3
+  main:
+    allow-bean-definition-overriding: true
+logging:
+  level:
+    org.springframework: ERROR
+    com.maryanto.dimas.example: ${LOG_LEVEL:DEBUG}
+  file: ${LOG_LOCATION:${spring.application.name}.log}
