@@ -33,7 +33,7 @@ spring:
     database: postgresql
   flyway:
     encoding: UTF-8
-    enabled: false
+    enabled: true
     baseline-on-migrate: true
     clean-disabled: false
     clean-on-validation-error: true
