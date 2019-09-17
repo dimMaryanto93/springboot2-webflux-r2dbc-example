@@ -1,3 +1,10 @@
+database:
+  host: ${DATABASE_HOST:localhost}
+  port: ${DATABASE_PORT:5432}
+  name: ${DATABASE_NAME:postgres}
+  auth:
+    username: ${DATABASE_USER:postgres}
+    password: ${DATABASE_PASSWORD:passwordnyaPostgres}
 server:
   port: ${APPLICATION_PORT:8080}
   servlet:
@@ -11,9 +18,9 @@ spring:
   mvc:
     dispatch-options-request: true
   datasource:
-    url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${DATABASE_NAME:postgres}
-    username: ${DATABASE_USER:postgres}
-    password: ${DATABASE_PASSWORD:passwordnyaPostgres}
+    url: jdbc:postgresql://${database.host}:${database.port}/${database.name}
+    username: ${database.auth.username}
+    password: ${database.auth.password}
     driver-class-name: org.postgresql.Driver
   jpa:
     generate-ddl: false
@@ -38,6 +45,10 @@ spring:
     clean-disabled: false
     clean-on-validation-error: true
     connect-retries: 3
+    check-location: true
+    user: ${database.auth.username}
+    password: ${database.auth.password}
+    url: jdbc:postgresql://${database.host}:${database.port}/${database.name}
   main:
     allow-bean-definition-overriding: true
 logging:

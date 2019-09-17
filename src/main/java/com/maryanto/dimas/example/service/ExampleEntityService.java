@@ -14,11 +14,10 @@ public class ExampleEntityService {
     private ExampleDao dao;
 
     public Mono<ExampleEntity> save(ExampleEntity data) {
-        data = dao.save(data);
-        return Mono.justOrEmpty(data);
+        return dao.save(data);
     }
 
     public Flux<ExampleEntity> findAll() {
-        return Flux.fromIterable(dao.findAll());
+        return dao.findAll();
     }
 }
