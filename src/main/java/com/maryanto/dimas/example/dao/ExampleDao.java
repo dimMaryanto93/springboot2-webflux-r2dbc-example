@@ -1,6 +1,8 @@
 package com.maryanto.dimas.example.dao;
 
+import com.maryanto.dimas.example.dto.ExampleEntityDto;
 import com.maryanto.dimas.example.entity.ExampleEntity;
+import com.maryanto.dimas.example.repository.ExampleEntityRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -9,6 +11,12 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Slf4j
 @Repository
 public class ExampleDao {
@@ -16,22 +24,43 @@ public class ExampleDao {
     @Autowired
     private DatabaseClient client;
 
+    @Autowired
+    private ExampleEntityRepository repository;
+
     public Mono<ExampleEntity> save(ExampleEntity data) {
+        return repository.save(data);
+//        return null;
+    }
+
+    public Mono<Void> update(ExampleEntity data) {
         log.info("{}", data);
-        Mono<ExampleEntity> rowUpdated = client.insert().into("examples")
-                .value("nama", data.getNama())
-                .value("tanggal_lahir", data.getTanggalLahir())
-                .value("saldo", data.getSaldo())
-                .value("created_date", data.getCreatedDate())
-                .then().thenReturn(data);
+        Mono<Void> rowUpdated = client
+                .execute("update examples\n" +
+                        "set name          = :name,\n" +
+                        "    age          = :age,\n" +
+                        "    birthdate = :birthdate\n" +
+                        "where id = :id")
+                .bind("name", data.getNama())
+                .bind("age", data.getUmur())
+                .bind("birthdate", data.getTanggalLahir())
+                .bind("id", data.getId())
+                .then();
         return rowUpdated;
     }
 
-    public Flux<ExampleEntity> findAll() {
-        Flux<ExampleEntity> list = client.select().from("examples")
+    public Flux<ExampleEntityDto.Response> findAll() {
+        Flux<ExampleEntityDto.Response> list = client.select().from(ExampleEntity.class)
                 .orderBy(Sort.Order.asc("umur"))
-                .as(ExampleEntity.class)
-                .fetch()
+                .map(
+                        (row, rowMetadata) -> new ExampleEntityDto.Response(
+                                row.get("id", String.class),
+                                row.get("name", String.class),
+                                row.get("age", Integer.class),
+                                Date.valueOf(row.get("birthdate", LocalDate.class)).getTime(),
+                                row.get("balance", BigDecimal.class),
+                                Timestamp.valueOf(row.get("created_date", LocalDateTime.class)).getTime()
+                        )
+                )
                 .all();
         return list;
     }

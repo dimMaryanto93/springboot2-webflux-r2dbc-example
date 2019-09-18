@@ -28,4 +28,17 @@ public class ExampleEntityDto {
         @NotNull
         private BigDecimal saldo;
     }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Response {
+
+        private String id;
+        private String nama;
+        private Integer umur;
+        private Long tanggalLahir;
+        private BigDecimal saldo;
+        private Long createdDate;
+    }
 }

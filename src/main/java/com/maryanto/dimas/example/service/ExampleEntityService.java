@@ -1,6 +1,7 @@
 package com.maryanto.dimas.example.service;
 
 import com.maryanto.dimas.example.dao.ExampleDao;
+import com.maryanto.dimas.example.dto.ExampleEntityDto;
 import com.maryanto.dimas.example.entity.ExampleEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class ExampleEntityService {
         return dao.save(data);
     }
 
-    public Flux<ExampleEntity> findAll() {
+    public Flux<ExampleEntityDto.Response> findAll() {
         return dao.findAll();
     }
 }

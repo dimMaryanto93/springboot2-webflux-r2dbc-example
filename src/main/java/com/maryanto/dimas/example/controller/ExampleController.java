@@ -12,7 +12,6 @@ import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Slf4j
 @RestController
@@ -30,8 +29,7 @@ public class ExampleController {
     }
 
     @GetMapping("/list")
-    public Flux<ExampleEntity> findAll() {
-        log.info("query calling! at {}", new Date());
+    public Flux<ExampleEntityDto.Response> findAll() {
         return service.findAll();
     }
 }
