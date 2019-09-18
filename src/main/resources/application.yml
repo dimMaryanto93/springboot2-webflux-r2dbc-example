@@ -18,7 +18,7 @@ spring:
   mvc:
     dispatch-options-request: true
   datasource:
-    url: jdbc:postgresql://${database.host}:${database.port}/${database.name}
+    url: r2dbc:pool:postgresql://${database.host}:${database.port}/${database.name}
     username: ${database.auth.username}
     password: ${database.auth.password}
     driver-class-name: org.postgresql.Driver

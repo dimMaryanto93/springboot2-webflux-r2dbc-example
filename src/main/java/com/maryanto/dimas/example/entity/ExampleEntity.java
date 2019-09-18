@@ -7,8 +7,8 @@ import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -20,8 +20,8 @@ public class ExampleEntity implements Serializable {
     private String id;
     private String nama;
     private Integer umur;
-    private Date tanggalLahir;
+    private LocalDate tanggalLahir;
     private BigDecimal saldo;
-    private Timestamp createdDate;
+    private LocalDateTime createdDate;
 
 }

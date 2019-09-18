@@ -2,12 +2,12 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 create table examples
 (
-    id            character varying(64) not null primary key,
+    id            character varying(64) not null primary key default uuid_generate_v4(),
     nama          character varying(100),
-    umur          integer                        default 0,
-    tanggal_lahir date                  not null default now(),
-    saldo         decimal(14)           not null default 0,
-    created_date  timestamp             not null default now()
+    umur          integer                                    default 0,
+    tanggal_lahir date                  not null             default now(),
+    saldo         decimal(14)           not null             default 0,
+    created_date  timestamp             not null             default now()
 );
 
 insert into examples(id, nama, umur, tanggal_lahir, saldo, created_date)
