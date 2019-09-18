@@ -5,7 +5,7 @@ create table examples
     id           character varying(64) not null primary key default uuid_generate_v4(),
     name         character varying(100),
     age          integer                                    default 0,
-    birthdate     date                  not null             default now(),
+    birthdate    date                  not null             default now(),
     balance      decimal(14)           not null             default 0,
     created_date timestamp             not null             default now()
 );

@@ -16,6 +16,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Slf4j
 @Repository
@@ -56,9 +57,13 @@ public class ExampleDao {
                                 row.get("id", String.class),
                                 row.get("name", String.class),
                                 row.get("age", Integer.class),
-                                Date.valueOf(row.get("birthdate", LocalDate.class)).getTime(),
+                                row.get("birthdate", LocalDate.class) != null ?
+                                        Date.valueOf(Objects.requireNonNull(row.get("birthdate", LocalDate.class))).getTime() :
+                                        null,
                                 row.get("balance", BigDecimal.class),
-                                Timestamp.valueOf(row.get("created_date", LocalDateTime.class)).getTime()
+                                row.get("created_date", LocalDateTime.class) != null ?
+                                        Timestamp.valueOf(Objects.requireNonNull(row.get("created_date", LocalDateTime.class))).getTime() :
+                                        null
                         )
                 )
                 .all();
