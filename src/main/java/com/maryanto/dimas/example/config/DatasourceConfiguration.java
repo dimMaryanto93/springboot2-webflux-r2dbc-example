@@ -8,8 +8,7 @@ import org.springframework.boot.autoconfigure.flyway.FlywayDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.r2dbc.connectionfactory.R2dbcTransactionManager;
-import org.springframework.transaction.ReactiveTransactionManager;
+import org.springframework.data.r2dbc.core.DatabaseClient;
 
 import java.sql.SQLException;
 
@@ -37,8 +36,8 @@ public class DatasourceConfiguration {
     }
 
     @Bean
-    public ReactiveTransactionManager transactionalOperator(ConnectionFactory cf) {
-        return new R2dbcTransactionManager(cf);
+    public DatabaseClient databaseClient(ConnectionFactory cf) {
+        return DatabaseClient.create(cf);
     }
 
 }

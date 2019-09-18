@@ -95,6 +95,11 @@
 
     <repositories>
         <repository>
+            <id>repository.dimas-maryanto.com</id>
+            <name>Mirror Repository Public group maven</name>
+            <url>http://repository.dimas-maryanto.com:8081/repository/maven-public/</url>
+        </repository>
+        <repository>
             <id>spring-milestones</id>
             <name>Spring Milestones</name>
             <url>https://repo.spring.io/milestone</url>

@@ -37,6 +37,6 @@ spring:
     allow-bean-definition-overriding: true
 logging:
   level:
-    org.springframework: ERROR
     com.maryanto.dimas.example: ${LOG_LEVEL:DEBUG}
+    org.springframework: DEBUG
   file: ${LOG_LOCATION:${spring.application.name}.log}

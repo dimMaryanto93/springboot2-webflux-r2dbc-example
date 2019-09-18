@@ -1,8 +1,9 @@
 package com.maryanto.dimas.example.dao;
 
 import com.maryanto.dimas.example.entity.ExampleEntity;
-import com.maryanto.dimas.example.repository.ExampleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -11,13 +12,18 @@ import reactor.core.publisher.Mono;
 public class ExampleDao {
 
     @Autowired
-    private ExampleRepository repository;
+    private DatabaseClient client;
 
     public Mono<ExampleEntity> save(ExampleEntity data) {
-        return repository.save(data);
+        return null;
     }
 
-    public Flux<ExampleEntity> findAll(){
-        return repository.findAll();
+    public Flux<ExampleEntity> findAll() {
+        Flux<ExampleEntity> list = client.select().from("examples")
+                .orderBy(Sort.Order.asc("umur"))
+                .as(ExampleEntity.class)
+                .fetch()
+                .all();
+        return list;
     }
 }
